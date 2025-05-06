@@ -98,6 +98,9 @@ O backlog foi dividido em épicos, features e histórias de usuário com cada hi
 </tbody>
 </table>
 
+</center>
+<center>
+
 Fonte: [Rafael Ferreira](https://github.com/RafaelCLG0)
 
 </center>
