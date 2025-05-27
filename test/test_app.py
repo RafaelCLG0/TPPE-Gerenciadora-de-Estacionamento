@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "a
 from src.main import app
 from httpx import AsyncClient
 
-# Teste de integração - ignorado propositalmente
+
 @pytest.mark.skip(reason="Ignorado por enquanto – estrutura ok")
 @pytest.mark.asyncio
 async def test_hello_endpoint():
@@ -16,7 +16,7 @@ async def test_hello_endpoint():
     assert response.status_code == 200
     assert response.json() == {"message": "Hello World"}
 
-# Teste unitário - também ignorado
+
 @pytest.mark.skip(reason="Ignorado por enquanto – estrutura ok")
 def test_somador_simples():
     assert 1 + 1 == 2
