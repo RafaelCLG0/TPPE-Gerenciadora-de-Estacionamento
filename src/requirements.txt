@@ -1,7 +1,9 @@
 fastapi
 uvicorn[standard]
-mysql-connector-python
+sqlalchemy[asyncio]
+aiomysql
 python-dotenv
 pytest
 httpx
 pytest-asyncio
+cryptography
