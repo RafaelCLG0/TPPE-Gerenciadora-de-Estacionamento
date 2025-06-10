@@ -4,6 +4,7 @@ sqlalchemy[asyncio]
 aiomysql
 python-dotenv
 pytest
+pylint
 httpx
 pytest-asyncio
 cryptography

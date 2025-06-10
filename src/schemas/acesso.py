@@ -1,16 +1,21 @@
-from datetime import datetime
 from pydantic import BaseModel
-from pydantic import ConfigDict
+from datetime import datetime
 
 class AcessoBase(BaseModel):
     placa: str
-    tipo_acesso: str
-    horario_entrada: datetime
-    horario_saida: datetime | None = None
+    hora_entrada: int
+    hora_saida: int
+    data_entrada: datetime
+    data_saida: datetime
+    evento: bool = False
+    mensalista: bool = False
+    estacionamento_id: int
 
 class AcessoCreate(AcessoBase):
     pass
 
-class AcessoOut(AcessoBase):
+class AcessoResponse(AcessoBase):
     id: int
-    model_config = ConfigDict(from_attributes=True)
+
+    class Config:
+        orm_mode = True
