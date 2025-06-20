@@ -13,6 +13,7 @@ class AcessoOut(BaseModel):
     entrada: datetime
     saida: datetime
     estacionamento_id: int
+    tipo_acesso: str
 
     class Config:
         orm_mode = True

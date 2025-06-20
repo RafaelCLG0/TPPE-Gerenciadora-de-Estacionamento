@@ -3,9 +3,8 @@ uvicorn
 sqlalchemy
 pymysql
 python-dotenv
-pydantic
+pydantic>=2.5
 pytest
 httpx
 pytest-asyncio
 cryptography
-python-dotenv
