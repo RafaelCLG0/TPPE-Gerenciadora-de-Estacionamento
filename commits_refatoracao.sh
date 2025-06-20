@@ -1,0 +1,28 @@
+#!/bin/bash
+
+git init
+git add .
+git commit -m "refactor(usuario): reestruturado schema, repository e router com FastAPI + SQLAlchemy"
+git commit -m "refactor(estacionamento): criado CRUD completo com suporte a valores e horários noturnos"
+git commit -m "refactor(acesso): adicionado modelo e lógica com inferência de tipo de acesso no repository"
+git commit -m "refactor(acesso.inferencia): criado módulo de lógica de inferência (fração, diária, noturno)"
+git commit -m "refactor(acesso.router): integração da inferência na criação de acessos"
+git commit -m "refactor(main.py): incluído create_all e routers das entidades principais"
+git commit -m "refactor(estacionamento.router): adicionado suporte a PUT e DELETE para atualização e remoção"
+git commit -m "refactor(acesso.router): adicionado suporte a PUT e DELETE para atualização e remoção"
+git commit -m "refactor(evento): implementado CRUD para acessos com valor fixo informado pelo cliente"
+git commit -m "refactor(mensalista): implementado CRUD com controle de vigência para mensalistas"
+git commit -m "refactor(seguradora): implementado CRUD de seguradora e função de busca de desconto automático"
+git commit -m "refactor(relatorios): criado endpoint de acessos por estacionamento e cálculo de repasses por período"
+git commit -m "refactor(relatorios.router): corrigida query de contagem usando func.count() e group_by"
+git commit -m "refactor(horasfraco): criado módulo auxiliar para cálculo de frações de tempo"
+git commit -m "refactor(turnos): criado verificador de horário dentro do turno (inclui virada de dia)"
+git commit -m "refactor(convertertempo): criado utilitário para calcular duração entre horários"
+git commit -m "refactor(test): adicionados testes automatizados para usuários, acessos e estacionamento"
+git commit -m "refactor(test_acesso): incluído teste com inferência automática e verificação de persistência"
+git commit -m "refactor(test_inferencia): teste parametrizado da função inferir_tipo_acesso"
+git commit -m "refactor(docker-compose.yml): configurado banco MySQL com volume e rede interna"
+git commit -m "refactor(Dockerfile): configurado ambiente FastAPI com instalação via requirements.txt"
+git commit -m "refactor(README.md): documentado estrutura, execução, testes e funcionalidades"
+git commit -m "refactor(.pylintrc): adicionado arquivo de lint personalizado para padrão PEP8 no projeto"
+git commit -m "refactor(main.py): incluído router de relatorios no app FastAPI com tag apropriada"
