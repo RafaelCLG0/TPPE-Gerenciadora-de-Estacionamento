@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class UsuarioCreate(BaseModel):
     nome: str
@@ -12,5 +12,4 @@ class UsuarioOut(BaseModel):
     email: str
     perfil: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
