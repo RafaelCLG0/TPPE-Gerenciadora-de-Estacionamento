@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
 class AcessoCreate(BaseModel):
@@ -15,5 +15,4 @@ class AcessoOut(BaseModel):
     estacionamento_id: int
     tipo_acesso: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

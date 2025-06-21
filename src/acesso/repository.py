@@ -27,7 +27,7 @@ def criar_acesso(db: Session, acesso: AcessoCreate):
         estacionamento.horarioNoturnoFim
     )
 
-    novo_acesso = Acesso(**acesso.dict(), tipo_acesso=tipo)
+    novo_acesso = Acesso(**acesso.model_dump(), tipo_acesso=tipo)
     db.add(novo_acesso)
     db.commit()
     db.refresh(novo_acesso)
