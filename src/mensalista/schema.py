@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import date
 
 class MensalistaCreate(BaseModel):
@@ -18,5 +18,4 @@ class MensalistaOut(BaseModel):
     fim_vigencia: date
     estacionamento_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

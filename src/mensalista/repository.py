@@ -15,7 +15,7 @@ class Mensalista(Base):
     estacionamento_id = Column(Integer, ForeignKey("estacionamentos.id"))
 
 def criar_mensalista(db: Session, mensalista: MensalistaCreate):
-    novo_mensalista = Mensalista(**mensalista.dict())
+    novo_mensalista = Mensalista(**mensalista.model_dump())
     db.add(novo_mensalista)
     db.commit()
     db.refresh(novo_mensalista)
