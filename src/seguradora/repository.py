@@ -12,7 +12,7 @@ class Seguradora(Base):
     percentual_desconto = Column(Float)
 
 def criar_seguradora(db: Session, seguradora: SeguradoraCreate):
-    nova = Seguradora(**seguradora.dict())
+    nova = Seguradora(**seguradora.model_dump())
     db.add(nova)
     db.commit()
     db.refresh(nova)

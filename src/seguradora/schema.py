@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class SeguradoraCreate(BaseModel):
     nome: str
@@ -11,5 +11,4 @@ class SeguradoraOut(BaseModel):
     documento_cliente: str
     percentual_desconto: float
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
