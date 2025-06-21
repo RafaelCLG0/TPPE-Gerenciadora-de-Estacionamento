@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
 class EventoCreate(BaseModel):
@@ -16,5 +16,4 @@ class EventoOut(BaseModel):
     valor_fixo: float
     estacionamento_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

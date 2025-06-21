@@ -14,7 +14,7 @@ class Evento(Base):
     estacionamento_id = Column(Integer, ForeignKey("estacionamentos.id"))
 
 def criar_evento(db: Session, evento: EventoCreate):
-    novo_evento = Evento(**evento.dict())
+    novo_evento = Evento(**evento.model_dump())
     db.add(novo_evento)
     db.commit()
     db.refresh(novo_evento)
