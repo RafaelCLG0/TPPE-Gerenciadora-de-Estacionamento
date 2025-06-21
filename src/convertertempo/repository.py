@@ -13,7 +13,7 @@ class Usuario(Base):
     perfil = Column(String(50))
 
 def criar_usuario(db: Session, usuario: UsuarioCreate):
-    novo_usuario = Usuario(**usuario.dict())
+    novo_usuario = Usuario(**usuario.model_dump())
     db.add(novo_usuario)
     db.commit()
     db.refresh(novo_usuario)
