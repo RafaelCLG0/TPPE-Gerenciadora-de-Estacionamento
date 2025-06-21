@@ -15,7 +15,8 @@ def test_criar_estacionamento():
         "valorNoturno": 15.0,
         "horarioNoturnoInicio": "22:00",
         "horarioNoturnoFim": "05:00",
-        "percentualRepasse": 12.0
+        "percentualRepasse": 12.0,
+        "capacidade": 75
     })
     assert response.status_code == 200
     data = response.json()
