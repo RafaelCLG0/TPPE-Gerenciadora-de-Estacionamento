@@ -19,7 +19,8 @@ def estacionamento_padrao():
         "valorNoturno": 20.0,
         "horarioNoturnoInicio": "20:00",
         "horarioNoturnoFim": "06:00",
-        "percentualRepasse": 10.0
+        "percentualRepasse": 10.0,
+        "capacidade": 100
     })
     return response.json()
 
@@ -29,8 +30,12 @@ def test_criar_acesso_com_inferencia(estacionamento_padrao):
 
     response = client.post("/acessos/", json={
         "placa": "ABC1234",
-        "entrada": entrada.isoformat(),
-        "saida": saida.isoformat(),
+        "data_entrada": entrada.date().isoformat(),
+        "hora_entrada": entrada.time().isoformat(timespec="minutes"),
+        "data_saida": saida.date().isoformat(),
+        "hora_saida": saida.time().isoformat(timespec="minutes"),
+        "evento": False,
+        "mensalista": False,
         "estacionamento_id": estacionamento_padrao["id"]
     })
 
