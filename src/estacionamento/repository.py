@@ -20,7 +20,7 @@ class Estacionamento(Base):
     percentualRepasse = Column(Float)
 
 def criar_estacionamento(db: Session, estacionamento: EstacionamentoCreate):
-    novo_estacionamento = Estacionamento(**estacionamento.dict())
+    novo_estacionamento = Estacionamento(**estacionamento.model_dump())
     db.add(novo_estacionamento)
     db.commit()
     db.refresh(novo_estacionamento)
