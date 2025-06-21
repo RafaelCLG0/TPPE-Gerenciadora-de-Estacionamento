@@ -18,6 +18,7 @@ class Estacionamento(Base):
     horarioNoturnoInicio = Column(String(5))
     horarioNoturnoFim = Column(String(5))
     percentualRepasse = Column(Float)
+    capacidade = Column(Integer)
 
 def criar_estacionamento(db: Session, estacionamento: EstacionamentoCreate):
     novo_estacionamento = Estacionamento(**estacionamento.model_dump())

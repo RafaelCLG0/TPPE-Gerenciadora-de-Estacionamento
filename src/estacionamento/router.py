@@ -27,7 +27,7 @@ def atualizar(estacionamento_id: int, estacionamento: EstacionamentoCreate, db: 
     db_est = db.query(EstacionamentoModel).filter(EstacionamentoModel.id == estacionamento_id).first()
     if not db_est:
         raise HTTPException(status_code=404, detail="Estacionamento não encontrado")
-    for key, value in estacionamento.dict().items():
+    for key, value in estacionamento.model_dump().items():
         setattr(db_est, key, value)
     db.commit()
     db.refresh(db_est)

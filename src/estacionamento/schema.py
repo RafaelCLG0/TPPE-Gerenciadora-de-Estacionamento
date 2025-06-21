@@ -1,5 +1,4 @@
 from pydantic import BaseModel, ConfigDict
-from typing import Optional
 
 class EstacionamentoCreate(BaseModel):
     nome: str
@@ -13,6 +12,7 @@ class EstacionamentoCreate(BaseModel):
     horarioNoturnoInicio: str
     horarioNoturnoFim: str
     percentualRepasse: float
+    capacidade: int
 
 class EstacionamentoOut(BaseModel):
     id: int
@@ -27,5 +27,6 @@ class EstacionamentoOut(BaseModel):
     horarioNoturnoInicio: str
     horarioNoturnoFim: str
     percentualRepasse: float
+    capacidade: int
 
     model_config = ConfigDict(from_attributes=True)
