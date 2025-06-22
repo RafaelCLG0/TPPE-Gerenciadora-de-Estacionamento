@@ -35,10 +35,10 @@ Além disso, há **descontos de seguradoras** e **percentual de repasse** ao con
 | Estac. 3       | R$10   | 0%         | R$50          | 40%                                    |
 
 | Estacionamento | Mensalista | Evento | Horário Noturno       | Capacidade | % Repassado |
-|----------------|------------|--------|---------------------|------------|-------------|
-| Estac. 1       | R$600      | R$50   | 19:00 às 08:00      | 300        | 50%         |
-| Estac. 2       | R$455      | R$60   | 21:00 às 07:00      | 120        | 60%         |
-| Estac. 3       | R$350      | R$40   | 20:00 às 08:00      | 600        | 70%         |
+|----------------|------------|--------|------------------------|------------|-------------|
+| Estac. 1       | R$600      | R$50   | 19:00 às 08:00         | 300        | 50%         |
+| Estac. 2       | R$455      | R$60   | 21:00 às 07:00         | 120        | 60%         |
+| Estac. 3       | R$350      | R$40   | 20:00 às 08:00         | 600        | 70%         |
 
 ---
 
@@ -54,7 +54,7 @@ Além disso, há **descontos de seguradoras** e **percentual de repasse** ao con
 | RM3A9 | -                | Noturno     | R$54,00        | R$27,00            |
 | AM31J | -                | Evento      | R$50,00        | R$25,00            |
 
-**➡️ Total repassado ao contratante: R$442,00**
+➡️ **Total repassado ao contratante: R$442,00**
 
 ### Estacionamento 2
 
@@ -66,21 +66,7 @@ Além disso, há **descontos de seguradoras** e **percentual de repasse** ao con
 | RM3A9 | 21:36 – 6:12     | Noturno     | R$21,00        | R$12,60            |
 | AM31J | -                | Evento      | R$60,00        | R$36,00            |
 
-**➡️ Total repassado ao contratante: R$177,00**
-
----
-
-## 🧠 Protótipo de Alta Fidelidade
-
-O protótipo de alta fidelidade foi criado no Figma para representar as interfaces do sistema de forma visual e navegável, cobrindo todas as funcionalidades do sistema, como cadastro de estacionamento, registros de acesso, relatórios e painel inicial.
-
-### 🔗 Acesse o protótipo:
-
-👉 [Protótipo no Figma](https://www.figma.com/proto/CSsRpoXBR0BWWojN1ZrDn0/Prot%C3%B3tipo-de-Alta-FIdelidade?page-id=0%3A1&type=design&node-id=107-1118&viewport=29390%2C34193%2C3.02&scaling=min-zoom&starting-point-node-id=107%3A1118&show-proto-sidebar=1&mode=design)
-
-<p align="center">
-  <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FCSsRpoXBR0BWWojN1ZrDn0%2FProt%25C3%25B3tipo-de-Alta-FIdelidade%3Fpage-id%3D0%253A1%26type%3Ddesign%26node-id%3D107-1118%26viewport%3D29390%252C34193%252C3.02%26scaling%3Dmin-zoom%26starting-point-node-id%3D107%253A1118%26show-proto-sidebar%3D1%26mode%3Ddesign" allowfullscreen></iframe>
-</p>
+➡️ **Total repassado ao contratante: R$177,00**
 
 ---
 
@@ -101,4 +87,76 @@ O protótipo de alta fidelidade foi criado no Figma para representar as interfac
 ├── Dockerfile              # Container da aplicação
 ├── requirements.txt        # Dependências Python
 └── README.md               # Documentação inicial do projeto
+```
 
+---
+
+## 🐳 Rodando com Docker
+
+A aplicação pode ser executada facilmente com Docker. A única dependência necessária é o Docker (e o Docker Compose).
+
+### ▶️ Subindo a aplicação
+
+```bash
+docker compose up --build
+```
+
+### ℹ️ Observações importantes
+
+- Em algumas máquinas, é necessário adicionar `sudo` antes do comando:
+  ```bash
+  sudo docker compose up --build
+  ```
+
+- Se estiver utilizando uma **versão mais antiga** do Docker Compose (com hífen), use:
+  ```bash
+  docker-compose up --build
+  ```
+
+---
+
+## 🧪 Testes e Análise de Código
+
+### ✅ Executando os testes com Pytest
+
+Você pode executar os testes automatizados diretamente no container da aplicação:
+
+```bash
+docker-compose exec app pytest
+```
+
+📌 Antes, certifique-se de que a API está em execução:
+
+```bash
+docker-compose up -d --build
+```
+
+---
+
+### 🔍 Análise Estática de Código com Pylint
+
+Para realizar a análise de qualidade de código com `pylint`, ative o ambiente virtual (caso esteja rodando localmente) e execute:
+
+```bash
+PYTHONPATH=$(pwd) pylint src/
+```
+
+---
+
+## 📄 Documentação da API
+
+Acesse a interface interativa da API via Swagger no navegador:
+
+🔗 **http://localhost:8000/docs**
+
+---
+
+## 🛠️ Comandos Úteis
+
+| Finalidade                     | Comando                                              |
+|-------------------------------|------------------------------------------------------|
+| Subir os containers (build)   | `docker compose up --build`                         |
+| Subir containers em background| `docker-compose up -d --build`                      |
+| Derrubar containers + volumes | `docker compose down -v`                            |
+| Executar testes Pytest        | `docker-compose exec app pytest`                    |
+| Rodar Pylint localmente       | `PYTHONPATH=$(pwd) pylint src/`                     |
