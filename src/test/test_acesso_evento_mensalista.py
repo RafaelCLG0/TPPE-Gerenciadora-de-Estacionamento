@@ -1,10 +1,23 @@
-from fastapi.testclient import TestClient
-from src.main import app
+"""Testes para acesso do tipo evento e mensalista."""
+
 from datetime import date
+import sys
+import os
+
+from fastapi.testclient import TestClient
+
+from src.main import app
+
+# Garantir que o src esteja no path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 client = TestClient(app)
 
-def criar_estacionamento_padrao(cnpj):
+
+def criar_estacionamento_padrao(cnpj: str) -> int:
+    """
+    Cria um estacionamento padrão para uso nos testes.
+    """
     response = client.post("/estacionamentos/", json={
         "nome": "Estac Centro",
         "cnpj": cnpj,
@@ -21,7 +34,11 @@ def criar_estacionamento_padrao(cnpj):
     })
     return response.json()["id"]
 
+
 def test_acesso_evento():
+    """
+    Testa a criação de acesso do tipo evento.
+    """
     estacionamento_id = criar_estacionamento_padrao("00011122200091")
     response = client.post("/acessos/", json={
         "placa": "EVENTO123",
@@ -38,7 +55,11 @@ def test_acesso_evento():
     assert data["tipo_acesso"] == "evento"
     assert data["valor_pago"] == 45.0
 
+
 def test_acesso_mensalista():
+    """
+    Testa a criação de acesso do tipo mensalista.
+    """
     estacionamento_id = criar_estacionamento_padrao("00011122200092")
     response = client.post("/acessos/", json={
         "placa": "MENSAL123",
