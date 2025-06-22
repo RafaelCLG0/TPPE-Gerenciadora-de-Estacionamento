@@ -1,9 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-from datetime import date, time
+"""Schemas Pydantic para criação e retorno de acessos."""
 
-"""
-Schemas Pydantic para criação e retorno de acessos.
-"""
+from datetime import date, time
+from pydantic import BaseModel, ConfigDict
+
 
 class AcessoCreate(BaseModel):
     """
@@ -17,6 +16,7 @@ class AcessoCreate(BaseModel):
     evento: bool
     mensalista: bool
     estacionamento_id: int
+
 
 class AcessoOut(BaseModel):
     """
