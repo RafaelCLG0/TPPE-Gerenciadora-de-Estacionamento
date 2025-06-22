@@ -3,7 +3,6 @@ services:
   db:
     image: mysql:8.0
     container_name: estacionamento-db
-    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_DATABASE: estacionamento
       MYSQL_USER: admin
