@@ -1,18 +1,36 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+
+def is_horario_noturno(hora, inicio, fim):
+    """Verifica se a hora está dentro do intervalo noturno, inclusive quando cruza a meia-noite."""
+    if inicio < fim:
+        return inicio <= hora <= fim
+    else:
+        return hora >= inicio or hora <= fim
 
 def inferir_tipo_acesso(entrada: datetime, saida: datetime, horario_noturno_inicio: str, horario_noturno_fim: str) -> str:
     """
-    Inferir o tipo de acesso com base na duração e horários.
+    Inferir o tipo de acesso com base na duração e horário do acesso.
+
+    Parâmetros:
+    - entrada: datetime de entrada
+    - saida: datetime de saída
+    - horario_noturno_inicio: string no formato "HH:MM"
+    - horario_noturno_fim: string no formato "HH:MM"
+
+    Retorna:
+    - str: tipo de acesso ('noturno', 'diaria', 'hora_cheia', 'fracao', 'invalido')
     """
+    if saida < entrada:
+        return "invalido"
+
     duracao = saida - entrada
     horas = duracao.total_seconds() / 3600
 
-    # Converter strings de horário para datetime.time
     noturno_inicio = datetime.strptime(horario_noturno_inicio, "%H:%M").time()
     noturno_fim = datetime.strptime(horario_noturno_fim, "%H:%M").time()
 
-    # Verifica se a entrada e saída estão no intervalo noturno
-    if entrada.time() >= noturno_inicio or saida.time() <= noturno_fim:
+    if is_horario_noturno(entrada.time(), noturno_inicio, noturno_fim) and \
+       is_horario_noturno(saida.time(), noturno_inicio, noturno_fim):
         return "noturno"
     elif horas >= 9:
         return "diaria"

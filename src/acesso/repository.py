@@ -1,12 +1,19 @@
+"""Módulo de criação e listagem de acessos ao estacionamento."""
+
+from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, String, Date, Time, Boolean, ForeignKey, Float
+from fastapi import HTTPException
+
 from src.database import Base
-from datetime import datetime
 from src.acesso.schema import AcessoCreate
 from src.estacionamento.repository import Estacionamento
 from src.acesso.inferencia import inferir_tipo_acesso
 
 class Acesso(Base):
+    """
+    Modelo ORM para representar um acesso ao estacionamento.
+    """
     __tablename__ = "acessos"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -22,14 +29,19 @@ class Acesso(Base):
     valor_pago = Column(Float)
 
 def criar_acesso(db: Session, acesso: AcessoCreate):
+    """
+    Cria um novo acesso e calcula o valor com base no tipo de acesso.
+    """
     estacionamento = db.query(Estacionamento).filter(Estacionamento.id == acesso.estacionamento_id).first()
     if not estacionamento:
-        raise Exception("Estacionamento não encontrado")
+        raise HTTPException(status_code=404, detail="Estacionamento não encontrado")
 
     entrada_dt = datetime.combine(acesso.data_entrada, acesso.hora_entrada)
     saida_dt = datetime.combine(acesso.data_saida, acesso.hora_saida)
 
-    # Lógica de cálculo
+    if saida_dt < entrada_dt:
+        raise HTTPException(status_code=400, detail="Data de saída anterior à entrada")
+
     if acesso.evento:
         valor = estacionamento.valorEvento
         tipo = "evento"
@@ -42,7 +54,7 @@ def criar_acesso(db: Session, acesso: AcessoCreate):
         minutos = duracao.total_seconds() / 60
 
         if tipo == "fracao":
-            fracoes = (minutos + 14) // 15  # Arredonda para cima a cada 15 min
+            fracoes = (minutos + 14) // 15
             valor = fracoes * estacionamento.valorFracao
         elif tipo == "hora_cheia":
             horas = (minutos + 59) // 60
@@ -61,4 +73,7 @@ def criar_acesso(db: Session, acesso: AcessoCreate):
     return novo_acesso
 
 def listar_acessos(db: Session):
+    """
+    Retorna todos os acessos cadastrados no sistema.
+    """
     return db.query(Acesso).all()

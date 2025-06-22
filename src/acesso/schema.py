@@ -1,7 +1,14 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import date, time
 
+"""
+Schemas Pydantic para criação e retorno de acessos.
+"""
+
 class AcessoCreate(BaseModel):
+    """
+    Schema de entrada para criação de acesso.
+    """
     placa: str
     data_entrada: date
     hora_entrada: time
@@ -12,6 +19,9 @@ class AcessoCreate(BaseModel):
     estacionamento_id: int
 
 class AcessoOut(BaseModel):
+    """
+    Schema de saída para exibição de acesso.
+    """
     id: int
     placa: str
     data_entrada: date
