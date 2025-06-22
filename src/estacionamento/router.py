@@ -38,11 +38,19 @@ def listar(db: Session = Depends(get_db)):
     return listar_estacionamentos(db)
 
 @router.put("/{estacionamento_id}", response_model=EstacionamentoOut)
-def atualizar(estacionamento_id: int, estacionamento: EstacionamentoCreate, db: Session = Depends(get_db)):
+def atualizar(
+    estacionamento_id: int,
+    estacionamento: EstacionamentoCreate,
+    db: Session = Depends(get_db)
+):
     """
     Atualiza os dados de um estacionamento existente.
     """
-    db_est = db.query(EstacionamentoModel).filter(EstacionamentoModel.id == estacionamento_id).first()
+    db_est = (
+    db.query(EstacionamentoModel)
+    .filter(EstacionamentoModel.id == estacionamento_id)
+    .first()
+)
     if not db_est:
         raise HTTPException(status_code=404, detail="Estacionamento não encontrado")
     for key, value in estacionamento.model_dump().items():
@@ -56,7 +64,11 @@ def remover(estacionamento_id: int, db: Session = Depends(get_db)):
     """
     Remove um estacionamento com base no ID.
     """
-    db_est = db.query(EstacionamentoModel).filter(EstacionamentoModel.id == estacionamento_id).first()
+    db_est = (
+    db.query(EstacionamentoModel)
+    .filter(EstacionamentoModel.id == estacionamento_id)
+    .first()
+)
     if not db_est:
         raise HTTPException(status_code=404, detail="Estacionamento não encontrado")
     db.delete(db_est)
