@@ -1,13 +1,21 @@
+"""Testes de integração: criação de acesso e verificação no banco de dados."""
+
+import os
+import sys
+from datetime import datetime, timedelta
+from fastapi.testclient import TestClient
+
 from src.database import SessionLocal
 from src.acesso.repository import Acesso
-from src.estacionamento.repository import Estacionamento
-from fastapi.testclient import TestClient
-from datetime import datetime, timedelta
 from src.main import app
+
+# Ajuste do path para permitir execução isolada
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 client = TestClient(app)
 
 def test_integracao_criar_acesso_e_verificar_banco():
+    """Cria um acesso via API e valida se foi persistido corretamente no banco."""
     db = SessionLocal()
     try:
         # Criar estacionamento
