@@ -1,5 +1,9 @@
 [MAIN]
 
+disable=
+      E1102,  # Not using the instance when calling a method
+      R0903,  # Too few public methods
+      R0801,  # Duplicate code
 
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
