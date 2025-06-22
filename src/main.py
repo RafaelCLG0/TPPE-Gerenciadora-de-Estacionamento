@@ -1,17 +1,18 @@
-from fastapi import FastAPI
+"""Ponto de entrada da aplicação FastAPI para o sistema de gerenciamento de estacionamento."""
+
+import time  # Import padrão
+from sqlalchemy.exc import OperationalError  # Import de terceiros
+
+from fastapi import FastAPI  # Import de terceiros
+
+# Imports do projeto
+from src.database import Base, engine
 from src.usuario.router import router as usuario_router
 from src.estacionamento.router import router as estacionamento_router
 from src.acesso.router import router as acesso_router
 from src.relatorios.router import router as relatorios_router
 
-from src.database import Base, engine
-from src.usuario.repository import Usuario
-from src.estacionamento.repository import Estacionamento
-from src.acesso.repository import Acesso
-
-import time
-from sqlalchemy.exc import OperationalError
-
+# Inicialização do app
 app = FastAPI()
 
 # Aguarda o banco iniciar e cria as tabelas
@@ -23,7 +24,10 @@ for attempt in range(MAX_RETRIES):
         print("✅ Banco de dados conectado e tabelas criadas.")
         break
     except OperationalError:
-        print(f"⏳ Tentativa {attempt+1}/{MAX_RETRIES}: banco indisponível. Tentando novamente em {WAIT_SECONDS}s...")
+        print(
+            f"⏳ Tentativa {attempt + 1}/{MAX_RETRIES}: banco indisponível. "
+            f"Tentando novamente em {WAIT_SECONDS}s..."
+        )
         time.sleep(WAIT_SECONDS)
 else:
     raise RuntimeError("❌ Não foi possível conectar ao banco de dados após várias tentativas.")
