@@ -1,6 +1,11 @@
+"""Schemas Pydantic para entrada e saída de dados de estacionamento."""
+
 from pydantic import BaseModel, ConfigDict
 
 class EstacionamentoCreate(BaseModel):
+    """
+    Schema para criação de um novo estacionamento.
+    """
     nome: str
     cnpj: str
     valorFracao: float
@@ -15,6 +20,9 @@ class EstacionamentoCreate(BaseModel):
     capacidade: int
 
 class EstacionamentoOut(BaseModel):
+    """
+    Schema para exibição dos dados de um estacionamento.
+    """
     id: int
     nome: str
     cnpj: str
