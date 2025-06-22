@@ -1,6 +1,6 @@
 """Módulo de rotas para operações relacionadas a usuários."""
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from src.usuario.schema import UsuarioCreate, UsuarioOut
