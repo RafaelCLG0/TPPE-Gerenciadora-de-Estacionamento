@@ -45,29 +45,45 @@ def calcular_repasses(
     fim: datetime = Query(...)
 ):
     """
-    Calcula o valor de repasse por estacionamento dentro de um intervalo de tempo.
+    Calcula o valor bruto, repasse e lucro por estacionamento dentro de um intervalo de tempo.
     """
     acessos = (
         db.query(Acesso)
-        .filter(Acesso.entrada >= inicio, Acesso.saida <= fim)
+        .filter(Acesso.data_entrada >= inicio.date(), Acesso.data_saida <= fim.date())
         .all()
     )
 
-    total_repasses = {}
+    resumo_financeiro = {}
+
     for acesso in acessos:
         estacionamento = db.query(Estacionamento).filter(
             Estacionamento.id == acesso.estacionamento_id
         ).first()
         if not estacionamento:
             continue
-        valor_simulado = 10.0  # Substituir por acesso.valor_pago se existir
-        repasse = valor_simulado * (estacionamento.percentualRepasse / 100)
+
+        valor_pago = acesso.valor_pago or 0.0
+        repasse = valor_pago * (estacionamento.percentualRepasse / 100)
+        lucro = valor_pago - repasse
         nome = estacionamento.nome
-        if nome not in total_repasses:
-            total_repasses[nome] = 0
-        total_repasses[nome] += repasse
+
+        if nome not in resumo_financeiro:
+            resumo_financeiro[nome] = {
+                "total_bruto": 0.0,
+                "total_repasse": 0.0,
+                "lucro_liquido": 0.0
+            }
+
+        resumo_financeiro[nome]["total_bruto"] += valor_pago
+        resumo_financeiro[nome]["total_repasse"] += repasse
+        resumo_financeiro[nome]["lucro_liquido"] += lucro
 
     return [
-        {"estacionamento": nome, "total_repasse": total}
-        for nome, total in total_repasses.items()
+        {
+            "estacionamento": nome,
+            "total_bruto": round(resumo["total_bruto"], 2),
+            "total_repasse": round(resumo["total_repasse"], 2),
+            "lucro_liquido": round(resumo["lucro_liquido"], 2)
+        }
+        for nome, resumo in resumo_financeiro.items()
     ]
