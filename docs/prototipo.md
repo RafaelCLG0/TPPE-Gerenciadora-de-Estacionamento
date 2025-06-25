@@ -14,9 +14,9 @@ Você pode acessar o protótipo interativo através do link abaixo:
 
 Também é possível visualizar o protótipo diretamente na página, conforme embed abaixo:
 
-<p align="center">
-  <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/design/EQuRe9KMtyQhd4di5kk1K5/Prot%C3%B3tipo?node-id=0-1&t=oJNXdFOicoA2FRbk-1" allowfullscreen></iframe>
-</p>
+## <a>*Prótipo Navegável*</a>
+
+<p style="text-align: center"><iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/EQuRe9KMtyQhd4di5kk1K5/Prot%C3%B3tipo?node-id=26-2&p=f&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=26%3A2&embed-host=share" allowfullscreen></iframe>" allowfullscreen></iframe></p>
 
 ## Funcionalidades Representadas
 
