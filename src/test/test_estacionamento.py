@@ -5,11 +5,14 @@ import sys
 from fastapi.testclient import TestClient
 
 from src.main import app
+from src.database import SessionLocal
+from src.estacionamento.repository import Estacionamento
 
 # Adiciona o caminho base ao sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 client = TestClient(app)
+
 
 def test_criar_estacionamento():
     """
@@ -33,6 +36,10 @@ def test_criar_estacionamento():
     data = response.json()
     assert data["cnpj"] == "98765432000100"
 
+    # Limpeza ao final do teste
+    limpar_estacionamentos()
+
+
 def test_listar_estacionamentos():
     """
     Testa a listagem de todos os estacionamentos cadastrados.
@@ -40,3 +47,16 @@ def test_listar_estacionamentos():
     response = client.get("/estacionamentos/")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
+    # Limpeza ao final do teste
+    limpar_estacionamentos()
+
+
+def limpar_estacionamentos():
+    """
+    Remove estacionamentos criados nos testes.
+    """
+    db = SessionLocal()
+    db.query(Estacionamento).delete()
+    db.commit()
+    db.close()

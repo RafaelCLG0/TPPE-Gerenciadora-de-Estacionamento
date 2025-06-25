@@ -4,13 +4,18 @@ from datetime import datetime, timedelta
 import pytest
 from fastapi.testclient import TestClient
 from src.main import app
+from src.database import SessionLocal
+from src.acesso.repository import Acesso
+from src.estacionamento.repository import Estacionamento
 
 client = TestClient(app)
 
-# Criar um estacionamento para teste
+
 @pytest.fixture(scope="module")
 def estacionamento_padrao():
-    """Cria um estacionamento padrão para uso nos testes."""
+    """
+    Cria um estacionamento padrão para uso nos testes.
+    """
     response = client.post("/estacionamentos/", json={
         "nome": "Estacionamento Central",
         "cnpj": "12345678000100",
@@ -27,8 +32,11 @@ def estacionamento_padrao():
     })
     return response.json()
 
+
 def test_criar_acesso_com_inferencia(estacionamento_padrao):  # pylint: disable=redefined-outer-name
-    """Testa criação de acesso e inferência do tipo (ex: noturno)."""
+    """
+    Testa criação de acesso e inferência do tipo (ex: noturno).
+    """
     entrada = datetime.now().replace(hour=21, minute=0, second=0, microsecond=0)
     saida = entrada + timedelta(hours=2)
 
@@ -48,3 +56,17 @@ def test_criar_acesso_com_inferencia(estacionamento_padrao):  # pylint: disable=
     assert data["placa"] == "ABC1234"
     assert data["estacionamento_id"] == estacionamento_padrao["id"]
     assert "tipo_acesso" in data or "noturno" in str(response.content.decode()).lower()
+
+    # Limpeza ao final do teste
+    limpar_acessos_e_estacionamentos()
+
+
+def limpar_acessos_e_estacionamentos():
+    """
+    Remove acessos e estacionamentos criados nos testes.
+    """
+    db = SessionLocal()
+    db.query(Acesso).delete()
+    db.query(Estacionamento).delete()
+    db.commit()
+    db.close()

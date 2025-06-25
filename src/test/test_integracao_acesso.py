@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 from src.database import SessionLocal
 from src.acesso.repository import Acesso
+from src.estacionamento.repository import Estacionamento
 from src.main import app
 
 # Ajuste do path para permitir execução isolada
@@ -14,8 +15,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 client = TestClient(app)
 
+
 def test_integracao_criar_acesso_e_verificar_banco():
-    """Cria um acesso via API e valida se foi persistido corretamente no banco."""
+    """
+    Cria um acesso via API e valida se foi persistido corretamente no banco.
+    """
     db = SessionLocal()
     try:
         # Criar estacionamento
@@ -52,5 +56,18 @@ def test_integracao_criar_acesso_e_verificar_banco():
         acesso = db.query(Acesso).filter(Acesso.placa == "XYZ1234").first()
         assert acesso is not None
         assert acesso.tipo_acesso == "noturno"
+
     finally:
         db.close()
+        limpar_acessos_e_estacionamentos()
+
+
+def limpar_acessos_e_estacionamentos():
+    """
+    Remove acessos e estacionamentos criados no teste.
+    """
+    db = SessionLocal()
+    db.query(Acesso).delete()
+    db.query(Estacionamento).delete()
+    db.commit()
+    db.close()

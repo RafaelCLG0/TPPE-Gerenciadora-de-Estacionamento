@@ -5,14 +5,19 @@ import sys
 
 from fastapi.testclient import TestClient
 from src.main import app
+from src.database import SessionLocal
+from src.usuario.repository import Usuario
 
 # Permite execução direta dos testes
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 client = TestClient(app)
 
+
 def test_criar_usuario():
-    """Testa a criação de um usuário com perfil ADMIN."""
+    """
+    Testa a criação de um usuário com perfil ADMIN.
+    """
     response = client.post("/usuarios/", json={
         "nome": "Admin",
         "email": "admin@example.com",
@@ -24,8 +29,27 @@ def test_criar_usuario():
     assert data["email"] == "admin@example.com"
     assert data["perfil"] == "ADMIN"
 
+    # Limpa o banco ao final
+    limpar_usuarios()
+
+
 def test_listar_usuarios():
-    """Testa a listagem de usuários cadastrados."""
+    """
+    Testa a listagem de usuários cadastrados.
+    """
     response = client.get("/usuarios/")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
+    # Limpa o banco ao final
+    limpar_usuarios()
+
+
+def limpar_usuarios():
+    """
+    Remove usuários criados nos testes.
+    """
+    db = SessionLocal()
+    db.query(Usuario).delete()
+    db.commit()
+    db.close()

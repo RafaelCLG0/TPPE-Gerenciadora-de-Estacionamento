@@ -1,6 +1,4 @@
-"""
-Teste para a função de inferência do tipo de acesso no sistema de estacionamento.
-"""
+"""Teste para a função de inferência do tipo de acesso no sistema de estacionamento."""
 
 from datetime import datetime
 import pytest
