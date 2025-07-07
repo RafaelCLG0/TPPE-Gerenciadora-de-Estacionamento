@@ -1,15 +1,9 @@
 """Testes unitários para criação e listagem de usuários via API."""
 
-import os
-import sys
-
 from fastapi.testclient import TestClient
 from src.main import app
 from src.database import SessionLocal
 from src.usuario.repository import Usuario
-
-# Permite execução direta dos testes
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 client = TestClient(app)
 
@@ -29,7 +23,6 @@ def test_criar_usuario():
     assert data["email"] == "admin@example.com"
     assert data["perfil"] == "ADMIN"
 
-    # Limpa o banco ao final
     limpar_usuarios()
 
 
@@ -41,7 +34,6 @@ def test_listar_usuarios():
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
-    # Limpa o banco ao final
     limpar_usuarios()
 
 

@@ -1,17 +1,12 @@
 """Testes para acesso do tipo evento e mensalista."""
 
 from datetime import date
-import sys
-import os
 
 from fastapi.testclient import TestClient
 from src.main import app
 from src.database import SessionLocal
 from src.estacionamento.repository import Estacionamento
 from src.acesso.repository import Acesso
-
-# Garantir que o src esteja no path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 client = TestClient(app)
 
@@ -58,7 +53,6 @@ def test_acesso_evento():
     assert data["tipo_acesso"] == "evento"
     assert data["valor_pago"] == 45.0
 
-    # Limpeza ao final do teste
     limpar_acessos_e_estacionamentos()
 
 
@@ -83,7 +77,6 @@ def test_acesso_mensalista():
     assert data["tipo_acesso"] == "mensalista"
     assert data["valor_pago"] == 200.0
 
-    # Limpeza ao final do teste
     limpar_acessos_e_estacionamentos()
 
 

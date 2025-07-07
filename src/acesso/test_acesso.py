@@ -57,7 +57,6 @@ def test_criar_acesso_com_inferencia(estacionamento_padrao):  # pylint: disable=
     assert data["estacionamento_id"] == estacionamento_padrao["id"]
     assert "tipo_acesso" in data or "noturno" in str(response.content.decode()).lower()
 
-    # Limpeza ao final do teste
     limpar_acessos_e_estacionamentos()
 
 

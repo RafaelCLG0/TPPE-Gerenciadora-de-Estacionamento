@@ -1,15 +1,10 @@
 """Testes dos endpoints de criação e listagem de Estacionamentos."""
 
-import os
-import sys
 from fastapi.testclient import TestClient
 
 from src.main import app
 from src.database import SessionLocal
 from src.estacionamento.repository import Estacionamento
-
-# Adiciona o caminho base ao sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 client = TestClient(app)
 
@@ -36,7 +31,6 @@ def test_criar_estacionamento():
     data = response.json()
     assert data["cnpj"] == "98765432000100"
 
-    # Limpeza ao final do teste
     limpar_estacionamentos()
 
 
@@ -48,7 +42,6 @@ def test_listar_estacionamentos():
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
-    # Limpeza ao final do teste
     limpar_estacionamentos()
 
 
