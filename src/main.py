@@ -1,9 +1,9 @@
 """Ponto de entrada da aplicação FastAPI para o sistema de gerenciamento de estacionamento."""
 
-import time  # Import padrão
-from sqlalchemy.exc import OperationalError  # Import de terceiros
-
-from fastapi import FastAPI  # Import de terceiros
+import time
+from sqlalchemy.exc import OperationalError
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware  # Importar o middleware de CORS
 
 # Imports do projeto
 from src.database import Base, engine
@@ -14,6 +14,30 @@ from src.relatorios.router import router as relatorios_router
 
 # Inicialização do app
 app = FastAPI()
+
+# =================================================================
+# CONFIGURAÇÃO DE CORS (Cross-Origin Resource Sharing)
+# =================================================================
+# Esta seção permite que o front-end (rodando em um servidor de desenvolvimento
+# como http://localhost:8001 ou http://127.0.0.1:5500) se comunique com a API.
+origins = [
+    "http://localhost",
+    "http://localhost:8001",
+    "http://localhost:5500",
+    "http://127.0.0.1",
+    "http://127.0.0.1:8001",
+    "http://127.0.0.1:5500",
+    "null" # Adicionado para permitir testes locais com file://, embora não seja o ideal.
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos os métodos (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Permite todos os cabeçalhos
+)
+# =================================================================
 
 # Aguarda o banco iniciar e cria as tabelas
 MAX_RETRIES = 20
