@@ -1,0 +1,34 @@
+body {
+    font-family: 'Inter', sans-serif, system-ui;
+}
+
+.sidebar {
+    background-color: #2B6CB0; /* Blue-700 from Tailwind */
+}
+
+.nav-link {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nav-link.active, .nav-link:hover {
+    background-color: #2C5282; /* Blue-800 from Tailwind */
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+}
+
+/* Lógica de Visibilidade de Página Simplificada */
+.page {
+    display: none; /* Esconde todas as páginas por padrão */
+}
+
+.page.active {
+    display: block; /* Mostra apenas a página com a classe 'active' */
+}
+
+/* Garante que a classe 'hidden' do Tailwind funcione como esperado */
+.hidden {
+    display: none !important;
+}
