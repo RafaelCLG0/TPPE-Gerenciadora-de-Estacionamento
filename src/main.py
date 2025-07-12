@@ -7,7 +7,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Imports do projeto
-# Importar DATABASE_URL para podermos imprimi-la
 from src.database import Base, engine, DATABASE_URL
 from src.usuario.router import router as usuario_router
 from src.estacionamento.router import router as estacionamento_router
@@ -36,13 +35,7 @@ app.add_middleware(
 )
 # =================================================================
 
-# =================================================================
-# PASSO DE DEPURAÇÃO: Imprimir a URL do banco de dados
-# =================================================================
-# Esta linha vai mostrar nos logs do Render qual URL estamos a usar.
 print(f"DEBUG: Tentando conectar com a DATABASE_URL: {DATABASE_URL}")
-# =================================================================
-
 
 # Aguarda o banco iniciar e cria as tabelas
 MAX_RETRIES = 20
@@ -61,9 +54,17 @@ for attempt in range(MAX_RETRIES):
 else:
     raise RuntimeError("❌ Não foi possível conectar ao banco de dados após várias tentativas.")
 
+# =================================================================
+# ROTA RAIZ (HEALTH CHECK)
+# =================================================================
+@app.get("/")
+def health_check():
+    """Endpoint raiz para verificação de saúde."""
+    return {"status": "ok", "message": "API da Gerenciadora de Estacionamentos no ar!"}
+# =================================================================
+
 # Rotas
 app.include_router(usuario_router, prefix="/usuarios", tags=["Usuários"])
 app.include_router(estacionamento_router, prefix="/estacionamentos", tags=["Estacionamentos"])
 app.include_router(acesso_router, prefix="/acessos", tags=["Acessos"])
 app.include_router(relatorios_router, prefix="/relatorios", tags=["Relatórios"])
-
