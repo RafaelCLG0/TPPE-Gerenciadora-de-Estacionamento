@@ -150,15 +150,18 @@ async function loadHomePage() {
 
 async function loadEstacionamentosPage() {
     const estacionamentos = await fetchAPI('/estacionamentos/');
-    if (estacionamentos) renderEstacionamentosTable(estacionamentos);
+    // CORREÇÃO: Chamar a função de renderização mesmo que a resposta seja nula ou vazia.
+    renderEstacionamentosTable(estacionamentos || []);
 }
 
 async function loadAcessosPage(filterId = '') {
-    let acessos = await fetchAPI('/acessos/');
-    if(acessos && filterId) {
-        acessos = acessos.filter(a => a.estacionamento_id == filterId);
+    const acessos = await fetchAPI('/acessos/');
+    // CORREÇÃO: Garantir que 'acessos' seja um array antes de filtrar e renderizar.
+    let acessosFiltrados = acessos || [];
+    if (filterId) {
+        acessosFiltrados = acessosFiltrados.filter(a => a.estacionamento_id == filterId);
     }
-    if (acessos) renderAcessosTable(acessos);
+    renderAcessosTable(acessosFiltrados);
 }
 
 // =================================================================
