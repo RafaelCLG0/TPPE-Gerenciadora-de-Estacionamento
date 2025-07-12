@@ -29,7 +29,7 @@ function addLastAction(icon, title, description) {
 }
 
 // =================================================================
-// API CALLS
+// API CALLS (COM TRATAMENTO DE ERROS MELHORADO)
 // =================================================================
 async function fetchAPI(endpoint, options = {}) {
     try {
@@ -37,13 +37,19 @@ async function fetchAPI(endpoint, options = {}) {
         const response = await fetch(url, options);
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({ detail: `HTTP error! status: ${response.status}` }));
-            throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+            
+            // CORREÇÃO: Formata a mensagem de erro detalhada do FastAPI.
+            let errorMessage = errorData.detail;
+            if (typeof errorMessage === 'object') {
+                errorMessage = JSON.stringify(errorMessage, null, 2);
+            }
+            throw new Error(errorMessage);
         }
         if (response.status === 204) return null;
         return response.json();
     } catch (error) {
-        console.error('API Error:', error);
-        alert(`Erro na comunicação com a API: ${error.message}`);
+        console.error('API Error:', error.message);
+        alert(`Erro na comunicação com a API:\n${error.message}`);
         return null;
     }
 }
@@ -214,7 +220,6 @@ document.getElementById('estacionamento-form').addEventListener('submit', async 
     if (result) {
         closeModal('estacionamento-modal');
         loadEstacionamentosPage();
-        // CORREÇÃO: Atualiza a lista de estacionamentos nos formulários.
         populateEstacionamentoDropdowns();
         const action = id ? 'atualizado' : 'criado';
         addLastAction('fa-solid fa-car-side', `Estacionamento ${action}`, `Estacionamento ${data.nome} ${action}.`);
