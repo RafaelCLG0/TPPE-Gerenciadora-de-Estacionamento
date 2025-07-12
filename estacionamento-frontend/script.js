@@ -150,13 +150,11 @@ async function loadHomePage() {
 
 async function loadEstacionamentosPage() {
     const estacionamentos = await fetchAPI('/estacionamentos/');
-    // CORREÇÃO: Chamar a função de renderização mesmo que a resposta seja nula ou vazia.
     renderEstacionamentosTable(estacionamentos || []);
 }
 
 async function loadAcessosPage(filterId = '') {
     const acessos = await fetchAPI('/acessos/');
-    // CORREÇÃO: Garantir que 'acessos' seja um array antes de filtrar e renderizar.
     let acessosFiltrados = acessos || [];
     if (filterId) {
         acessosFiltrados = acessosFiltrados.filter(a => a.estacionamento_id == filterId);
@@ -216,6 +214,7 @@ document.getElementById('estacionamento-form').addEventListener('submit', async 
     if (result) {
         closeModal('estacionamento-modal');
         loadEstacionamentosPage();
+        // CORREÇÃO: Atualiza a lista de estacionamentos nos formulários.
         populateEstacionamentoDropdowns();
         const action = id ? 'atualizado' : 'criado';
         addLastAction('fa-solid fa-car-side', `Estacionamento ${action}`, `Estacionamento ${data.nome} ${action}.`);
