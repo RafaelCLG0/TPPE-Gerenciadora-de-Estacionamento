@@ -1,6 +1,8 @@
+"""Módulo de repositório para o modelo ORM de Relatórios."""
+
+from datetime import datetime
 from sqlalchemy import Column, Integer, Float, DateTime, ForeignKey
 from src.database import Base
-from datetime import datetime
 
 class Relatorio(Base):
     """

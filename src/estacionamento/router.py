@@ -49,10 +49,10 @@ def atualizar(
     )
     if not db_est:
         raise HTTPException(status_code=404, detail="Estacionamento não encontrado")
-    
+
     for key, value in estacionamento.model_dump().items():
         setattr(db_est, key, value)
-    
+
     db.commit()
     db.refresh(db_est)
     return db_est
@@ -74,16 +74,20 @@ def remover(estacionamento_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Estacionamento não encontrado")
 
     # 1. Deletar todos os relatórios associados
-    db.query(RelatorioModel).filter(RelatorioModel.estacionamento_id == estacionamento_id).delete(synchronize_session=False)
+    db.query(RelatorioModel).filter(
+        RelatorioModel.estacionamento_id == estacionamento_id
+    ).delete(synchronize_session=False)
 
     # 2. Deletar todos os acessos associados
-    db.query(AcessoModel).filter(AcessoModel.estacionamento_id == estacionamento_id).delete(synchronize_session=False)
-    
+    db.query(AcessoModel).filter(
+        AcessoModel.estacionamento_id == estacionamento_id
+    ).delete(synchronize_session=False)
+
     # 3. Agora, deletar o estacionamento
     db.delete(db_est)
-    
+
     # 4. Comitar todas as alterações no banco de dados
     db.commit()
-    
+
     # Retorna uma resposta vazia com status 204, indicando sucesso.
     return Response(status_code=status.HTTP_204_NO_CONTENT)

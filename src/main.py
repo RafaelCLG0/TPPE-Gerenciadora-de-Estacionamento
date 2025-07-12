@@ -1,6 +1,5 @@
 """Ponto de entrada da aplicação FastAPI para o sistema de gerenciamento de estacionamento."""
 
-import os
 import time
 from sqlalchemy.exc import OperationalError
 from fastapi import FastAPI
@@ -23,7 +22,7 @@ origins = [
     "http://localhost",
     "http://localhost:8001",
     "http://127.0.0.1:5500",
-    # Lembre-se de adicionar a sua URL do Netlify aqui quando a tiver
+    "https://gerenciadoradeestacionamento.netlify.app"  # URL de produção adicionada
 ]
 
 app.add_middleware(
