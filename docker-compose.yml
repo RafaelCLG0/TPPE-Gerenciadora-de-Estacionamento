@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=estacionamento
     ports:
-      - "5433:5432" 
+      - "5433:5432" # Mapeia a porta 5433 do seu PC para a 5432 do contêiner
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -24,6 +24,10 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    # Variáveis para a conexão do banco de dados DENTRO do Docker
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
     depends_on:
       db:
         condition: service_healthy

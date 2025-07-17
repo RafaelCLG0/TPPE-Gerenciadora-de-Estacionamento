@@ -134,7 +134,6 @@ def test_full_workflow(driver):
     select.select_by_visible_text("Estacionamento Teste Final")
     print("TEST: Estacionamento selecionado no dropdown.")
     
-    # CORREÇÃO FINAL: Usar JavaScript para definir as datas de forma fiável
     driver.execute_script("document.getElementById('acesso-data-entrada').value = '2025-07-12'")
     driver.find_element(By.ID, "acesso-hora-entrada").send_keys("10:00")
     driver.execute_script("document.getElementById('acesso-data-saida').value = '2025-07-12'")
