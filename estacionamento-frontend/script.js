@@ -38,7 +38,6 @@ async function fetchAPI(endpoint, options = {}) {
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({ detail: `HTTP error! status: ${response.status}` }));
             
-            // CORREÇÃO: Formata a mensagem de erro detalhada do FastAPI.
             let errorMessage = errorData.detail;
             if (typeof errorMessage === 'object') {
                 errorMessage = JSON.stringify(errorMessage, null, 2);
@@ -109,14 +108,18 @@ async function populateEstacionamentoDropdowns() {
     const estacionamentos = await fetchAPI('/estacionamentos/');
     const selectFilter = document.getElementById('acesso-estacionamento-filter');
     const selectForm = document.getElementById('acesso-estacionamento-id');
+    const selectRelatorio = document.getElementById('relatorio-estacionamento-filter');
     
     selectFilter.innerHTML = '<option value="">Todos os Estacionamentos</option>';
     selectForm.innerHTML = '<option value="">Selecione um Estacionamento</option>';
+    selectRelatorio.innerHTML = '<option value="">Todos</option>';
 
     if(estacionamentos) {
         estacionamentos.forEach(est => {
-            selectFilter.innerHTML += `<option value="${est.id}">${est.nome}</option>`;
-            selectForm.innerHTML += `<option value="${est.id}">${est.nome}</option>`;
+            const option = `<option value="${est.id}">${est.nome}</option>`;
+            selectFilter.innerHTML += option;
+            selectForm.innerHTML += option;
+            selectRelatorio.innerHTML += option;
         });
     }
 }
@@ -300,8 +303,14 @@ document.getElementById('relatorio-form').addEventListener('submit', async (e) =
     e.preventDefault();
     const inicio = new Date(document.getElementById('relatorio-data-inicio').value).toISOString();
     const fim = new Date(document.getElementById('relatorio-data-fim').value).toISOString();
+    const estacionamentoId = document.getElementById('relatorio-estacionamento-filter').value;
     
-    const results = await fetchAPI(`/relatorios/repasses/?inicio=${inicio}&fim=${fim}`);
+    let endpoint = `/relatorios/repasses/?inicio=${inicio}&fim=${fim}`;
+    if (estacionamentoId) {
+        endpoint += `&estacionamento_id=${estacionamentoId}`;
+    }
+    
+    const results = await fetchAPI(endpoint);
     
     if (results && results.length > 0) {
         const totalBruto = results.reduce((sum, r) => sum + r.total_bruto, 0);
@@ -370,6 +379,8 @@ window.showPage = (pageId, openFormModal = false, isAcesso = false) => {
     if (pageId === 'page-home') loadHomePage();
     if (pageId === 'page-estacionamentos') loadEstacionamentosPage();
     if (pageId === 'page-acessos') loadAcessosPage();
+    // CORREÇÃO: Popula o dropdown sempre que a página de relatórios é mostrada.
+    if (pageId === 'page-relatorios') populateEstacionamentoDropdowns();
     
     if (openFormModal) {
         const modalId = isAcesso ? 'acesso-modal' : 'estacionamento-modal';
