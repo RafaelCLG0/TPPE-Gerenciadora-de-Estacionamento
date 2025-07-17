@@ -18,7 +18,7 @@
                     <i class="fa-solid fa-p text-4xl text-white"></i>
                 </div>
             </div>
-            <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
+            <h2 class="text-2xl font-bold text-center text-gray-800">Gerenciadora de Estacionamento</h2>
             <form id="login-form" class="mt-8 space-y-6">
                 <div class="space-y-4">
                     <input type="email" placeholder="Email" class="w-full px-4 py-2 text-gray-700 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -155,7 +155,7 @@
                 <div id="page-relatorios" class="page">
                     <h2 class="text-3xl font-bold text-gray-800">Relatório</h2>
                     <div class="p-6 mt-8 bg-white rounded-lg shadow-md">
-                        <form id="relatorio-form" class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                        <form id="relatorio-form" class="grid grid-cols-1 gap-6 md:grid-cols-4">
                             <div>
                                 <label for="relatorio-data-inicio" class="block text-sm font-medium text-gray-700">Data de Início</label>
                                 <input type="date" id="relatorio-data-inicio" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required>
@@ -163,6 +163,12 @@
                             <div>
                                 <label for="relatorio-data-fim" class="block text-sm font-medium text-gray-700">Data de Fim</label>
                                 <input type="date" id="relatorio-data-fim" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="relatorio-estacionamento-filter" class="block text-sm font-medium text-gray-700">Estacionamento</label>
+                                <select id="relatorio-estacionamento-filter" class="w-full p-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Todos</option>
+                                </select>
                             </div>
                              <div class="flex items-end">
                                 <button type="submit" class="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700">Gerar</button>
