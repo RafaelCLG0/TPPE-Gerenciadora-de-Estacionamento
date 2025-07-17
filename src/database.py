@@ -18,11 +18,13 @@ if not DATABASE_URL:
     DB_USER = os.getenv("POSTGRES_USER", "admin")
     DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "admin")
     DB_NAME = os.getenv("POSTGRES_DB", "estacionamento")
+    
     # Esta lógica agora funciona para ambos os métodos de teste locais:
     # - Dentro do Docker (Método 2), as variáveis de ambiente serão usadas.
     # - No seu Mac (Método 1), os valores padrão (localhost:5433) serão usados.
     DB_HOST = os.getenv("DB_HOST", "localhost")
     DB_PORT = os.getenv("DB_PORT", "5433")
+    
     DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 else:
     # O Render fornece uma URL no formato postgres://...

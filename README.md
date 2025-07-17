@@ -142,4 +142,3 @@ PYTHONPATH=. pylint src/
 Acesse a interface interativa da API para explorar todos os endpoints disponíveis:
 
 - **Localmente**: [http://localhost:8000/docs](http://localhost:8000/docs)  
-- **Online**: [https://tppe-gerenciadora-de-estacionamento.onrender.com/docs](https://tppe-gerenciadora-de-estacionamento.onrender.com/docs)

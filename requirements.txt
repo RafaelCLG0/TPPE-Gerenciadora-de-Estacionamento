@@ -9,3 +9,5 @@ httpx
 pytest-asyncio
 cryptography
 pylint
+selenium
+webdriver-manager
